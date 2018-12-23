@@ -33,4 +33,24 @@ def confirmar_remocao():
     if event == 'Sim':
         return True
     else:
-        return False 
+        return False
+
+def dialogo_editar_contato(contato):
+    janela3 = sg.Window('Editar contato',size=(350, 180) ,font=('Helvetica', 14))
+
+    layout = [[sg.Text('Edite os dados do contato')],      
+              [sg.Text('Nome', size=(8,1)),sg.InputText(contato['Nome'])],
+              [sg.Text('Telefone', size=(8,1)),sg.InputText(contato['Telefone'])],
+              [sg.Button('Atualizar'), sg.Cancel()]]      
+
+    janela3 = janela3.Layout(layout)    
+
+    event, values = janela3.Read()    
+    print(event, values)
+    janela3.Close()
+    if event == 'Atualizar':
+        novo_nome = values[0]
+        novo_telefone = values[1]
+        return (novo_nome,novo_telefone)
+    else:
+        return False

@@ -13,7 +13,7 @@ estrutura de armazenamento , uma lista de dicionarios chamada agenda
 """
 from operacoes import *
 import PySimpleGUI as sg
-from dialogos_suporte import get_valores_novo_contato, confirmar_remocao
+from dialogos_suporte import get_valores_novo_contato, confirmar_remocao, dialogo_editar_contato
 
 
 # carrega dados do arquivo salvo 
@@ -77,8 +77,18 @@ while True:
                     janela.FindElement('txt_telefone').Update('Telefone: ')
         
     if event == "Editar":
-        pass
-    
+        nome = values['lista_de_contatos'][0]
+        contato = buscar_contato(nome)
+        resultado = dialogo_editar_contato(contato)# chama o dialogo para alterar valores
+        if resultado != False: # se o usuario nao cancelou a alteracao
+            editar_contato(nome, resultado[0],resultado[1])
+            valores = get_nome_contatos() # atualizar a list box
+            janela.FindElement('lista_de_contatos').Update(valores)
+            #atualizar os Texts
+            janela.FindElement('txt_nome').Update('Nome: ')
+            janela.FindElement('txt_telefone').Update('Telefone: ')
+                    
+                    
     if event == 'lista_de_contatos': # faz a funcao de busca pelo list box
         nome = values['lista_de_contatos']    
         # listbox sempre retorna uma lista, mesmo a selecao sendo single element

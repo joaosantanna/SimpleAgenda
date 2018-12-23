@@ -12,14 +12,6 @@ def novo_contato(nome, telefone):
     contato ={"Nome": nome , "Telefone" : telefone}
     agenda.append(contato)
 
-def imprimir_contatos():
-    print(" Contatos cadastrados na agenda")
-    if len(agenda) > 0:
-        print("Nome \t  Telefone")
-        for contato in agenda:
-            print( contato["Nome"],"\t", contato["Telefone"])
-    else:
-        print("Nenhum contato na agenda")
 
 def apagar_contato(nome):
 
@@ -30,19 +22,13 @@ def apagar_contato(nome):
     return False
 
 
-def editar_contato():
-    print(" Editar contato")
-    nome = input("Digite o nome do contato que vc quer editar:")
+def editar_contato(nome,novo_nome, novo_telefone):
+
     for contato in agenda:
         if nome == contato["Nome"]:
-            op = input("Editar nome de {} (s)=sim (n)=Não\n :>".format(contato["Nome"] )) 
-            if opos.path.isfile('dados_agenda.txt') == 's' or op == 'S':
-                contato["Nome"] = input("Nome:")
-                print(" Nome atualizado")
-            op = input("Editar Telefone de {} (s)=sim (n)=Não\n :>".format(contato["Nome"] )) 
-            if op == 's' or op == 'S':
-                contato["Telefone"] = input("Telefone:")
-                print(" Telefone atualizado")
+            contato["Nome"] = novo_nome
+            contato["Telefone"] = novo_telefone
+                
            
 
 def buscar_contato(nome):

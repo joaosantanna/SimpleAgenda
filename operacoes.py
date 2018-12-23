@@ -25,12 +25,11 @@ def apagar_contato(nome):
 
     for contato in agenda:
         if nome == contato["Nome"]:
-            op = input("Voce realmente quer apagar {} (s)=sim (n)=Não\n :>".format(contato["Nome"] )) 
-            if op == 's' or op == 'S':
-                agenda.remove(contato)
-                print(" Contato apagado")
-                break
-            
+            agenda.remove(contato)
+            return True
+    return False
+
+
 def editar_contato():
     print(" Editar contato")
     nome = input("Digite o nome do contato que vc quer editar:")

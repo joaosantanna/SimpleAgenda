@@ -13,7 +13,7 @@ estrutura de armazenamento , uma lista de dicionarios chamada agenda
 """
 from operacoes import *
 import PySimpleGUI as sg
-from novo_contato_gui import get_valores_novo_contato
+from dialogos_suporte import get_valores_novo_contato, confirmar_remocao
 
 
 # carrega dados do arquivo salvo 
@@ -62,17 +62,19 @@ while True:
             janela.FindElement('lista_de_contatos').Update(valores)
             
     if event == "Apagar":
-        pass
-        '''
+        
         nome = values['lista_de_contatos']    
         # listbox sempre retorna uma lista, mesmo a selecao sendo single element
-        if len(nome) > 0: 
-            c = buscar_contato(nome[0])
-            if c != 0:
-                sg.Popup('Você realmente quer apagar o contato?')
-                janela.FindElement('txt_nome').Update('Nome: ' + c['Nome'])
-                janela.FindElement('txt_telefone').Update('Telefone: ' + c['Telefone'])
-        '''
+        if len(nome) > 0:
+            nome = nome[0]
+            if confirmar_remocao():
+                if apagar_contato(nome):
+                    sg.Popup('Contato apagado\n com sucesso!')
+                    valores = get_nome_contatos() # atualizar a list box
+                    janela.FindElement('lista_de_contatos').Update(valores)
+                    #atualizar os Texts
+                    janela.FindElement('txt_nome').Update('Nome: ')
+                    janela.FindElement('txt_telefone').Update('Telefone: ')
         
     if event == "Editar":
         pass
@@ -99,7 +101,7 @@ janela.Close()
 TODO:
 
      
-    - terminar de implementar a funcao de apagar contato
+    - Implementar a funcao de editar os dados do contato
     - usar o lint para melhorar o codigo
     - implementar as outras funcoes , deletar e editar para completar o CRUD
     - criar os testes de software para testar a camada do modelo MVC - MOdelo , view , controler

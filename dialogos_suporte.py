@@ -20,3 +20,17 @@ def get_valores_novo_contato():
         return 0
 
 def confirmar_remocao():
+    janela3 = sg.Window('Confirmar ?',size=(250, 100) ,font=('Helvetica', 14))
+
+    layout = [[sg.Text('Você realmente deseja \n apagar o contato?')],      
+              [sg.Button('Sim'), sg.Button('Não')]]      
+
+    janela3 = janela3.Layout(layout)    
+
+    event, values = janela3.Read()    
+    print(event, values)
+    janela3.Close()
+    if event == 'Sim':
+        return True
+    else:
+        return False 

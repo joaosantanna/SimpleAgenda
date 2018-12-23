@@ -1,3 +1,14 @@
+"""
+Projeto: Simple Agenda
+Descrição : uma agenda simples para guarda o nome e telefone do contato, primira versao feita
+em ambiente shell , agora portada para ambiente grafico usando o pySimpleGUI.
+
+Modulo: auxiliar , tem as funcoes de mais baixo nivel que auxiliam a armazenamento em memoria,
+acesso a disco e operacões de CRUD
+
+Autor : Joao Santanna - joaosantanna@yahoo.com.br
+versao : beta 0.1
+"""
 import os.path
 import pickle
 import PySimpleGUI as sg  
@@ -57,7 +68,6 @@ def carregar_dados():
             tmp = pickle.load(arq)
             for d in tmp:
                 agenda.append(d)
-            print('dados carregados com sucesso')
       # caso o arqivo nao exista o software inicia com uma lista vazia        
 
 def get_nome_contatos():

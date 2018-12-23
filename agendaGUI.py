@@ -3,17 +3,21 @@ Projeto: Simple Agenda
 Descrição : uma agenda simples para guarda o nome e telefone do contato, primira versao feita
 em ambiente shell , agora portada para ambiente grafico usando o pySimpleGUI.
 
+Modulo : componente princial que guarda a descricao da Interface grafica com o usuario
+
 Autor : Joao Santanna - joaosantanna@yahoo.com.br
 versao : beta 0.1
 
 Descrição dos arquivos:
 - agendaGUI.py - aquivo principal que contem as chamadas a GUI
-- operacoes2.py - arquivo de suporte com as funcoes do software relacionadas ao modelo, contem também a
+- operacoes.py - arquivo de suporte com as funcoes do software relacionadas ao modelo, contem também a
 estrutura de armazenamento , uma lista de dicionarios chamada agenda
+- dialogos_superte.py : arquivo que contem os dialogos de suporte da aplicacao que auxiliam as operacoes
+de entrada de novo contato, editar contato e remoção de contatos.
 """
 from operacoes import *
 import PySimpleGUI as sg
-from dialogos_suporte import get_valores_novo_contato, confirmar_remocao, dialogo_editar_contato
+from dialogos_suporte import dialogo_novo_contato, dialogo_confirmar_remocao, dialogo_editar_contato
 
 
 # carrega dados do arquivo salvo 
@@ -50,10 +54,9 @@ janela.Layout(layout)
 while True:
     
     event, values = janela.Read()  
-    print(event, values)
     
     if event == "Adicionar":
-        resultado = get_valores_novo_contato()
+        resultado = dialogo_novo_contato()
         if resultado != 0:
             nome = resultado[0]
             telefone = resultado[1]
@@ -67,7 +70,7 @@ while True:
         # listbox sempre retorna uma lista, mesmo a selecao sendo single element
         if len(nome) > 0:
             nome = nome[0]
-            if confirmar_remocao():
+            if dialogo_confirmar_remocao():
                 if apagar_contato(nome):
                     sg.Popup('Contato apagado\n com sucesso!')
                     valores = get_nome_contatos() # atualizar a list box
@@ -90,10 +93,9 @@ while True:
                     
                     
     if event == 'lista_de_contatos': # faz a funcao de busca pelo list box
-        nome = values['lista_de_contatos']    
+        nome = values['lista_de_contatos'][0]    
         # listbox sempre retorna uma lista, mesmo a selecao sendo single element
-        print(nome[0])
-        c = buscar_contato(nome[0])
+        c = buscar_contato(nome)
         if c != 0:
             janela.FindElement('txt_nome').Update('Nome: ' + c['Nome'])
             janela.FindElement('txt_telefone').Update('Telefone: ' + c['Telefone'])
@@ -110,8 +112,6 @@ janela.Close()
 '''
 TODO:
 
-     
-    - Implementar a funcao de editar os dados do contato
     - usar o lint para melhorar o codigo
     - implementar as outras funcoes , deletar e editar para completar o CRUD
     - criar os testes de software para testar a camada do modelo MVC - MOdelo , view , controler

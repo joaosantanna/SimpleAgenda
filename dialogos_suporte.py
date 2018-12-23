@@ -1,6 +1,16 @@
+"""
+Projeto: Simple Agenda
+Descrição : uma agenda simples para guarda o nome e telefone do contato, primira versao feita
+em ambiente shell , agora portada para ambiente grafico usando o pySimpleGUI.
+
+Modulo: auxiliar , tem os dialogos da UI 
+
+Autor : Joao Santanna - joaosantanna@yahoo.com.br
+versao : beta 0.1
+"""
 import PySimpleGUI as sg      
 
-def get_valores_novo_contato():
+def dialogo_novo_contato():
     janela2 = sg.Window('Novo contato',size=(350, 180) ,font=('Helvetica', 14))
 
 
@@ -12,14 +22,14 @@ def get_valores_novo_contato():
     janela2 = janela2.Layout(layout)    
 
     event, values = janela2.Read()    
-    print(event, values)
+    
     janela2.Close()
     if event == 'Adicionar':
         return values
     else:
         return 0
 
-def confirmar_remocao():
+def dialogo_confirmar_remocao():
     janela3 = sg.Window('Confirmar ?',size=(250, 100) ,font=('Helvetica', 14))
 
     layout = [[sg.Text('Você realmente deseja \n apagar o contato?')],      
@@ -28,7 +38,7 @@ def confirmar_remocao():
     janela3 = janela3.Layout(layout)    
 
     event, values = janela3.Read()    
-    print(event, values)
+    
     janela3.Close()
     if event == 'Sim':
         return True
@@ -46,7 +56,7 @@ def dialogo_editar_contato(contato):
     janela3 = janela3.Layout(layout)    
 
     event, values = janela3.Read()    
-    print(event, values)
+    
     janela3.Close()
     if event == 'Atualizar':
         novo_nome = values[0]
